@@ -8,18 +8,19 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            List<Route> object = findShortRoute("DUB", "SYD");
+            FinalRouteTree result = findShortRoute("DUB", "SYD");
 
-//            for (Route route : object) {
-//                System.out.println(route.getDepartureAirport() + " -- " + route.getArrivalAirport() + " ( " + route.getDuration() + " )");
-//            }
+            for (Route route : result.getRoutes()) {
+                System.out.println(route.getDepartureAirport() + " -- " + route.getArrivalAirport() + " ( " + route.getDuration() + " )");
+            }
+            System.out.println(result.getDuration());
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static List<Route> findShortRoute(String departure, String finalDestination) throws Exception {
+    public static FinalRouteTree findShortRoute(String departure, String finalDestination) throws Exception {
         //CONSIDER THAT one of the airport could not exist.
         //TODO CHECK THAT THERE IS ONE EXIT
         RoutingService routingService = new RoutingService();
@@ -28,6 +29,6 @@ public class Main {
 
         routingService.findShortRoute(departure, finalDestination);
         routingService.cleanPaths(routingService.solution, departure, finalDestination);
-        return routingService.solution;
+        return routingService.finalRouteTree;
     }
 }

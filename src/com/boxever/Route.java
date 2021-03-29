@@ -18,15 +18,15 @@ public class Route {
     public static List<Route> createRoutes() {
         List<Route> routes = new ArrayList<>();
 
-        routes.add(new Route("DUB", "CDG", 2));
-        routes.add(new Route("CDG", "SYD", 2));
-        routes.add(new Route("DUB", "SYD", 3));
+//        routes.add(new Route("DUB", "SYD", 3));
+//        routes.add(new Route("DUB", "CDG", 2));
+//        routes.add(new Route("CDG", "SYD", 2));
 
-//        routes.add(new Route("DUB", "CDG", 8));
-//        routes.add(new Route("CDG", "BOS", 2));
-//        routes.add(new Route("BOS", "SYD", 14));
-//        routes.add(new Route("CDG", "BKK", 13));
-//        routes.add(new Route("BKK", "SYD", 1));
+        routes.add(new Route("DUB", "CDG", 8));
+        routes.add(new Route("CDG", "BOS", 2));
+        routes.add(new Route("BOS", "SYD", 14));
+        routes.add(new Route("CDG", "BKK", 13));
+        routes.add(new Route("BKK", "SYD", 1));
 
 
 //        routes.add(new Route("DUB", "LHR", 1));

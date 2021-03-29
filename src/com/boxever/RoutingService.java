@@ -11,6 +11,7 @@ public class RoutingService {
 
     List<Route> solution = new ArrayList<>();
     Boolean thereIsAnEnd = false;
+    FinalRouteTree finalRouteTree = new FinalRouteTree();
 
     public List<Route> findShortRoute(String departure, String finalDestination) throws Exception {
         //CONSIDER THAT one of the airport could not exist.
@@ -71,23 +72,21 @@ public class RoutingService {
         }
 
         resultMap.put(counter, temporaryResult);
-        calculateFastest(resultMap);
-    }
-
-    private void calculateFastest(Map<Integer, List<Route>> validRoutes) {
-        validRoutes.forEach((Integer key, List<Route> routeValue) -> checkValues(routeValue, key));
-
+        resultMap.forEach((Integer key, List<Route> routeValue) -> checkValues(routeValue, key));
     }
 
     //todo names
-    private Integer checkValues(List<Route> routes, Integer key) {
+    private void checkValues(List<Route> routes, Integer key) {
         Integer currentValue = 0;
-        Integer previousValue = 0;
 
         for (Route route : routes) {
-    
+            currentValue += route.getDuration();
         }
 
-        return currentValue;
+        if(this.finalRouteTree.getDuration() == null || this.finalRouteTree.getDuration() > currentValue){
+            this.finalRouteTree.setKey(key);
+            this.finalRouteTree.setDuration(currentValue);
+            this.finalRouteTree.setRoutes(routes);
+        }
     }
 }
