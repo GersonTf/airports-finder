@@ -9,7 +9,7 @@ public class Route {
     private String arrivalAirport;
     private Integer duration;
 
-    private Route(String departure, String arrival, Integer duration) {
+    public Route(String departure, String arrival, Integer duration) {
         this.departureAirport = departure;
         this.arrivalAirport = arrival;
         this.duration = duration;

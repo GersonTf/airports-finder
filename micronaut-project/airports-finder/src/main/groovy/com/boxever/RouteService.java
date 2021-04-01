@@ -11,9 +11,18 @@ class RouteService {
 
     static final List<Route> routes = Route.createRoutes();
 
-    List<Route> solution = new ArrayList<>();
-    Boolean thereIsAnEnd = false;
-    FinalRouteTree finalRouteTree = new FinalRouteTree();
+    List<Route> solution;
+    Boolean thereIsAnEnd;
+    FinalRouteTree finalRouteTree;
+
+    public FinalRouteTree init (String departure, String finalDestination) throws Exception {
+        solution = new ArrayList<>();
+        thereIsAnEnd = false;
+        finalRouteTree = new FinalRouteTree();
+        findShortRoute(departure, finalDestination);
+        cleanPaths(this.solution, departure, finalDestination);
+        return finalRouteTree;
+    }
 
     public List<Route> findShortRoute(String departure, String finalDestination) throws Exception {
         //CONSIDER THAT one of the airport could not exist.

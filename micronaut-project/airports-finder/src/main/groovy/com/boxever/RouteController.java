@@ -18,8 +18,6 @@ class RouteController {
 
     @Get(uri = "/fastest", produces = APPLICATION_JSON)
     FinalRouteTree findShortestRoute(@QueryValue @NotNull String departure, @QueryValue @NotNull String finalDestination) throws Exception {
-        routeService.findShortRoute(departure, finalDestination);
-        routeService.cleanPaths(routeService.solution, departure, finalDestination);
-        return routeService.finalRouteTree;
+        return routeService.init(departure, finalDestination);
     }
 }

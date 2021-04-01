@@ -1,5 +1,7 @@
 package com.boxever
 
+import com.boxever.model.FinalRouteTree
+import com.boxever.model.Route
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
@@ -15,17 +17,84 @@ import javax.inject.Inject
 @MicronautTest
 class RouteControllerSpec extends Specification {
 
-    @Shared @Inject
+    @Shared
+    @Inject
     EmbeddedServer embeddedServer
 
-    @Shared @AutoCleanup @Inject @Client("/")
+    @Shared
+    @AutoCleanup
+    @Inject
+    @Client("/")
     RxHttpClient client
 
-    void "test index"() {
-        given:
-        HttpResponse response = client.toBlocking().exchange("/route/fastest")
+    void "calculating the route does not throw any exceptions and response status is 200 OK"() {
+        when:
+        HttpResponse response = client.toBlocking().exchange("/route/fastest?departure=DUB&finalDestination=SYD")
 
-        expect:
+        then:
         response.status == HttpStatus.OK
+
+        and:
+        noExceptionThrown()
+    }
+
+    void "returned json contains the fastest route, arrival and departure airports correspond to the ones sent"() {
+        when:
+        HttpResponse response = client.toBlocking().exchange("/route/fastest?departure=$departure&finalDestination=$finalDestination", FinalRouteTree)
+
+        then:
+        response.status == HttpStatus.OK
+        FinalRouteTree responseBody = response.body.get()
+        responseBody.duration == validatedDuration
+
+        and: 'response routes correspond to the good route DUB -LHR -BKK - SYD'
+        List<Route> routes = responseBody.routes
+        routes.size() == stopovers
+        routes.first().departureAirport == departure
+        routes.last().arrivalAirport == finalDestination
+
+        where:
+        departure | finalDestination | validatedDuration | stopovers
+        'DUB'     | 'SYD'            | 21                | 3
+//        'DUB'     | 'BOS'            | 8                 | 2
+        'LAS'     | 'SYD'            | 14                | 1
+    }
+
+    void "flight from DUB to SYD has the correct stops"() {
+        when:
+        HttpResponse response = client.toBlocking().exchange("/route/fastest?departure=$departure&finalDestination=$finalDestination", FinalRouteTree)
+
+        then:
+        response.status == HttpStatus.OK
+        FinalRouteTree responseBody = response.body.get()
+        responseBody.duration == validatedDuration
+
+        and: 'response routes correspond to the good route DUB -LHR -BKK - SYD'
+        List<Route> routes = responseBody.routes
+        routes.size() == stopovers
+
+        routes.eachWithIndex { Route route, int i ->
+            switch (i) {
+                case 0:
+                    assert route.departureAirport == 'DUB'
+                    assert route.arrivalAirport == 'LHR'
+                    assert route.duration == 1
+                    break
+                case 1:
+                    assert route.departureAirport == 'LHR'
+                    assert route.arrivalAirport == 'BKK'
+                    assert route.duration == 9
+                    break
+                case 2:
+                    assert route.departureAirport == 'BKK'
+                    assert route.arrivalAirport == 'SYD'
+                    assert route.duration == 11
+                    break
+            }
+        }
+
+        where:
+        departure | finalDestination | validatedDuration | stopovers
+        'DUB'     | 'SYD'            | 21                | 3
     }
 }
