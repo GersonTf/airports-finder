@@ -5,7 +5,7 @@ import java.util.List;
 
 public class FinalRouteTree {
 
-    private Integer key;
+    private String key;
 
     private Integer duration;
 
@@ -14,11 +14,11 @@ public class FinalRouteTree {
     public FinalRouteTree() {
     }
 
-    public Integer getKey() {
+    public String getKey() {
         return key;
     }
 
-    public void setKey(Integer key) {
+    public void setKey(String key) {
         this.key = key;
     }
 

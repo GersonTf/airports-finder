@@ -22,27 +22,28 @@ public class Route {
 //        routes.add(new Route("DUB", "CDG", 2));
 //        routes.add(new Route("CDG", "SYD", 2));
 
-        routes.add(new Route("DUB", "CDG", 8));
-        routes.add(new Route("CDG", "BOS", 2));
-        routes.add(new Route("BOS", "SYD", 14));
-        routes.add(new Route("CDG", "BKK", 13));
-        routes.add(new Route("BKK", "SYD", 1));
+//        routes.add(new Route("DUB", "CDG", 1));
+//        routes.add(new Route("CDG", "BOS", 9));
+//        routes.add(new Route("BOS", "SYD", 1));
+//        routes.add(new Route("DUB", "SYD", 1));
+//        routes.add(new Route("CDG", "BKK", 1));
+//        routes.add(new Route("BKK", "SYD", 1));
 
 
-//        routes.add(new Route("DUB", "LHR", 1));
-//        routes.add(new Route("DUB", "CDG", 2));
-//        routes.add(new Route("CDG", "BOS", 6));
-//        routes.add(new Route("CDG", "BKK", 9));
-//        routes.add(new Route("ORD", "LAS", 2));
-//        routes.add(new Route("LHR", "NYC", 5));
-//        routes.add(new Route("NYC", "LAS", 3));
-//        routes.add(new Route("BOS", "LAX", 4));
-//        routes.add(new Route("LHR", "BKK", 9));
-//        routes.add(new Route("BKK", "SYD", 11));
-//        routes.add(new Route("LAX", "LAS", 2));
-//        routes.add(new Route("DUB", "ORD", 6));
-//        routes.add(new Route("LAX", "SYD", 13));
-//        routes.add(new Route("LAS", "SYD", 14));
+        routes.add(new Route("DUB", "LHR", 1));
+        routes.add(new Route("DUB", "CDG", 2));
+        routes.add(new Route("CDG", "BOS", 6));
+        routes.add(new Route("CDG", "BKK", 9));
+        routes.add(new Route("ORD", "LAS", 2));
+        routes.add(new Route("LHR", "NYC", 5));
+        routes.add(new Route("NYC", "LAS", 3));
+        routes.add(new Route("BOS", "LAX", 4));
+        routes.add(new Route("LHR", "BKK", 9));
+        routes.add(new Route("BKK", "SYD", 11));
+        routes.add(new Route("LAX", "LAS", 2));
+        routes.add(new Route("DUB", "ORD", 6));
+        routes.add(new Route("LAX", "SYD", 13));
+        routes.add(new Route("LAS", "SYD", 14));
         return routes;
     }
 

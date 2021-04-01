@@ -8,12 +8,12 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            FinalRouteTree result = findShortRoute("DUB", "SYD");
+            FinalRouteTree result = findShortRoute("LAX", "SYD");
 
             for (Route route : result.getRoutes()) {
                 System.out.println(route.getDepartureAirport() + " -- " + route.getArrivalAirport() + " ( " + route.getDuration() + " )");
             }
-            System.out.println(result.getDuration());
+            System.out.println("time: " + result.getDuration());
 
         } catch (Exception e) {
             e.printStackTrace();

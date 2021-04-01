@@ -1,9 +1,6 @@
 package com.boxever;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class RoutingService {
 
@@ -40,50 +37,64 @@ public class RoutingService {
     //todo change name
     public void cleanPaths(List<Route> solution, String departure, String finalDestination) throws Exception {
 
-        Map<Integer, List<Route>> resultMap = new HashMap<>();
+        Map<String, List<Route>> resultMap = new HashMap<>();
         List<Route> temporaryResult = new ArrayList<>();
+
 
         //todo think carefuly if we need it
         if (!solution.stream().findFirst().get().getDepartureAirport().equals(departure)) {
             throw new Exception("paths don't start with the departure airport");
         }
 
-        List<String> visitedAirports = new ArrayList<>();
+        List<Route> visitedAirports = new ArrayList<>();
 
-        Integer counter = 0;
+        int counter = 0;
+        boolean isNewNode = false;
 
         for (Route route : solution) {
-
-
-            if (visitedAirports.contains(route.getDepartureAirport())) {
-                System.out.println("new node with the same parent");
+            if (counter++ > 0 && route.getDepartureAirport().equals(departure)) {
+                visitedAirports.clear();
             }
 
-            if (!temporaryResult.isEmpty() && route.getDepartureAirport().equals(departure)) {
-                resultMap.put(counter++, new ArrayList<>(temporaryResult));
-                temporaryResult.clear();
-
-                System.out.println("new branch from departure");
-            } else {
-                visitedAirports.add(route.getDepartureAirport());
+            if (isNewNode && !route.getDepartureAirport().equals(departure)) {
+                temporaryResult = findParentNodes(route.getDepartureAirport(), visitedAirports);
+                isNewNode = false;
             }
-
             temporaryResult.add(route);
+
+            if (route.getArrivalAirport().equals(finalDestination)) {
+                resultMap.put(UUID.randomUUID().toString(), new ArrayList<>(temporaryResult));
+                temporaryResult.clear();
+                isNewNode = true;
+            }
+
+            visitedAirports.add(route);
         }
 
-        resultMap.put(counter, temporaryResult);
-        resultMap.forEach((Integer key, List<Route> routeValue) -> checkValues(routeValue, key));
+        resultMap.forEach((String key, List<Route> routeValue) -> checkValues(routeValue, key));
+    }
+
+    private List<Route> findParentNodes(String currentDeparture, List<Route> visitedAirports) throws Exception {
+        List<Route> nodeWithPreviousAirports = new ArrayList<>();
+        for (Route route : visitedAirports) {
+            nodeWithPreviousAirports.add(route);
+            if (route.getArrivalAirport().equals(currentDeparture)) {
+                return nodeWithPreviousAirports;
+            }
+        }
+
+        throw new Exception("one of the nodes parents is not the received departure!!!");
     }
 
     //todo names
-    private void checkValues(List<Route> routes, Integer key) {
+    private void checkValues(List<Route> routes, String key) {
         Integer currentValue = 0;
 
         for (Route route : routes) {
             currentValue += route.getDuration();
         }
 
-        if(this.finalRouteTree.getDuration() == null || this.finalRouteTree.getDuration() > currentValue){
+        if (this.finalRouteTree.getDuration() == null || this.finalRouteTree.getDuration() > currentValue) {
             this.finalRouteTree.setKey(key);
             this.finalRouteTree.setDuration(currentValue);
             this.finalRouteTree.setRoutes(routes);
