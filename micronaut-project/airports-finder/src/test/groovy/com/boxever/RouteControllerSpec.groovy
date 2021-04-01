@@ -47,7 +47,7 @@ class RouteControllerSpec extends Specification {
         FinalRouteTree responseBody = response.body.get()
         responseBody.duration == validatedDuration
 
-        and: 'response routes correspond to the good route DUB -LHR -BKK - SYD'
+        and: 'response routes correspond to the good route'
         List<Route> routes = responseBody.routes
         routes.size() == stopovers
         routes.first().departureAirport == departure
@@ -56,8 +56,9 @@ class RouteControllerSpec extends Specification {
         where:
         departure | finalDestination | validatedDuration | stopovers
         'DUB'     | 'SYD'            | 21                | 3
-//        'DUB'     | 'BOS'            | 8                 | 2
         'LAS'     | 'SYD'            | 14                | 1
+        'LAX'     | 'SYD'            | 13                | 1
+        'BOS'     | 'SYD'            | 17                | 2
     }
 
     void "flight from DUB to SYD has the correct stops"() {

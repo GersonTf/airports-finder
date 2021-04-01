@@ -15,7 +15,7 @@ class RouteService {
     Boolean thereIsAnEnd;
     FinalRouteTree finalRouteTree;
 
-    public FinalRouteTree init (String departure, String finalDestination) throws Exception {
+    public FinalRouteTree init(String departure, String finalDestination) throws Exception {
         solution = new ArrayList<>();
         thereIsAnEnd = false;
         finalRouteTree = new FinalRouteTree();
@@ -25,16 +25,12 @@ class RouteService {
     }
 
     public List<Route> findShortRoute(String departure, String finalDestination) throws Exception {
-        //CONSIDER THAT one of the airport could not exist.
-
         for (Route route : routes) {
 
             if (route.getDepartureAirport().equals(departure) && route.getArrivalAirport().equals(finalDestination)) {
                 thereIsAnEnd = true;
                 solution.add(route);
-//todo delete print
             } else if (route.getDepartureAirport().equals(departure)) {
-                //todo clean the list
                 solution.add(route);
                 findShortRoute(route.getArrivalAirport(), finalDestination);
             }
@@ -42,7 +38,7 @@ class RouteService {
 
         //todo test if this works
         if (!thereIsAnEnd) {
-            throw new Exception("no path found");
+            throw new Exception("One of the paths can't be calculated, tree doesn't have an end");
         }
 
         return solution;
@@ -85,7 +81,7 @@ class RouteService {
             visitedAirports.add(route);
         }
 
-        resultMap.forEach((String key, List<Route> routeValue) -> checkValues(routeValue));
+        resultMap.forEach((String key, List<Route> routeValue) -> calculateRoutesDuration(routeValue));
     }
 
     private List<Route> findParentNodes(String currentDeparture, List<Route> visitedAirports) throws Exception {
@@ -101,7 +97,7 @@ class RouteService {
     }
 
     //todo names
-    private void checkValues(List<Route> routes) {
+    private void calculateRoutesDuration(List<Route> routes) {
         Integer currentValue = 0;
 
         for (Route route : routes) {
