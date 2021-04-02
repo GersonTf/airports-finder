@@ -1,29 +1,16 @@
 package com.boxever;
 
-import com.boxever.model.FinalRouteTree;
-import com.boxever.model.Route;
-
-import javax.inject.Singleton;
 import java.util.*;
 
-@Singleton
-class RouteService {
+public class RouteService {
 
     static final List<Route> routes = Route.createRoutes();
 
     //uncleanedTree will contain all the pairs calculated by the recursive function
-    List<Route> uncleanedTree;
-    Boolean thereIsAnEnd;
-    FinalRouteTree finalRouteTree;
 
-    public FinalRouteTree init(String departure, String finalDestination) throws Exception {
-        uncleanedTree = new ArrayList<>();
-        thereIsAnEnd = false;
-        finalRouteTree = new FinalRouteTree();
-        findAllRoutes(departure, finalDestination);
-        cleanPaths(this.uncleanedTree, departure, finalDestination);
-        return finalRouteTree;
-    }
+    List<Route> uncleanedTree = new ArrayList<>();
+    Boolean thereIsAnEnd = false;
+    FinalRouteTree finalRouteTree = new FinalRouteTree();
 
     /**
      * It will get all the pairs (Route) starting with the received departure airport and ending in the destination

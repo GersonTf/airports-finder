@@ -51,9 +51,14 @@ If one of the chains can't be formed (there is no valid path to the final destin
 Once we have all the possible pairs of nodes, we have to separate them into different chains so we can calculate the fastest one (RouteService.cleanPaths). This will separate each chain in a map of routes. For example, for the airports LAX and SYD, we will obtain a map with two elements, containing this two chains:
 
 LAX-LAS -> LAS-SYD (duration 16)
+
 LAX-SYD (duration 13)
 
 ## 3 sort by duration
 At this point, we just have all the different routes that we can take so RouteService.calculateRoutesDuration simply will find the fastest entry of the map (the shortest duration) and that will be our final solution.
 
+
+# Load airports
+
+As it wasn't especified how to load the airports, a class Route was created as a pojo that contains the departure airport, the arrival and the duration. The method Route.createRoutes() loads all the received airports.
 

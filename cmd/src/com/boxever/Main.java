@@ -1,7 +1,6 @@
 package com.boxever;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
 
@@ -21,14 +20,12 @@ public class Main {
     }
 
     public static FinalRouteTree findShortRoute(String departure, String finalDestination) throws Exception {
-        //CONSIDER THAT one of the airport could not exist.
-        //TODO CHECK THAT THERE IS ONE EXIT
-        RoutingService routingService = new RoutingService();
-        routingService.solution = new ArrayList<>();
-        routingService.thereIsAnEnd = false;
+        RouteService routeService = new RouteService();
+        routeService.uncleanedTree = new ArrayList<>();
+        routeService.thereIsAnEnd = false;
 
-        routingService.findShortRoute(departure, finalDestination);
-        routingService.cleanPaths(routingService.solution, departure, finalDestination);
-        return routingService.finalRouteTree;
+        routeService.findAllRoutes(departure, finalDestination);
+        routeService.cleanPaths(routeService.uncleanedTree, departure, finalDestination);
+        return routeService.finalRouteTree;
     }
 }
