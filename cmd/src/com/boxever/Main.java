@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            FinalRouteTree result = findShortRoute("DUB", "BOS");
+            FinalRouteTree result = findShortRoute("DUB", "SYD");
 
             for (Route route : result.getRoutes()) {
                 System.out.println(route.getDepartureAirport() + " -- " + route.getArrivalAirport() + " ( " + route.getDuration() + " )");

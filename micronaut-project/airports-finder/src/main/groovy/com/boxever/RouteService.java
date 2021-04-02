@@ -19,12 +19,12 @@ class RouteService {
         solution = new ArrayList<>();
         thereIsAnEnd = false;
         finalRouteTree = new FinalRouteTree();
-        findShortRoute(departure, finalDestination);
+        findAllRoutes(departure, finalDestination);
         cleanPaths(this.solution, departure, finalDestination);
         return finalRouteTree;
     }
 
-    public List<Route> findShortRoute(String departure, String finalDestination) throws Exception {
+    public List<Route> findAllRoutes(String departure, String finalDestination) throws Exception {
         for (Route route : routes) {
 
             if (route.getDepartureAirport().equals(departure) && route.getArrivalAirport().equals(finalDestination)) {
@@ -32,7 +32,7 @@ class RouteService {
                 solution.add(route);
             } else if (route.getDepartureAirport().equals(departure)) {
                 solution.add(route);
-                findShortRoute(route.getArrivalAirport(), finalDestination);
+                findAllRoutes(route.getArrivalAirport(), finalDestination);
             }
         }
 
